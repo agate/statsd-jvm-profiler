@@ -1,7 +1,6 @@
 package com.etsy.statsd.profiler;
 
 import com.etsy.statsd.profiler.reporter.Reporter;
-import com.etsy.statsd.profiler.server.ProfilerServer;
 import com.etsy.statsd.profiler.worker.ProfilerShutdownHookWorker;
 import com.etsy.statsd.profiler.worker.ProfilerThreadFactory;
 import com.etsy.statsd.profiler.worker.ProfilerWorkerThread;
@@ -73,10 +72,6 @@ public final class Agent {
             ProfilerWorkerThread worker = new ProfilerWorkerThread(profiler, errors);
             ScheduledFuture future =  scheduledExecutorService.scheduleAtFixedRate(worker, EXECUTOR_DELAY, profiler.getPeriod(), profiler.getTimeUnit());
             runningProfilers.put(profiler.getClass().getSimpleName(), future);
-        }
-
-        if (arguments.httpServerEnabled) {
-            ProfilerServer.startServer(runningProfilers, activeProfilers, arguments.httpPort, isRunning, errors);
         }
     }
 

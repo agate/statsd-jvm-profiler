@@ -1,0 +1,12 @@
+# Install Docker Compose
+# Run `docker-compose up` to build the jars
+version: '3'
+services:
+  statsd-jvm-profiler-builder:
+    image: maven:3-jdk-13
+    volumes:
+      - /root/.m2
+      - .:/statsd-jvm-profiler
+    working_dir: /statsd-jvm-profiler
+    entrypoint: bash
+    command: -c "mvn install && mvn package"
